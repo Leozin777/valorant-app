@@ -1,6 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:valorant_app/data/service/auth_service.dart';
+import 'package:valorant_app/views/screens/home_screen.dart';
+import 'package:valorant_app/views/screens/login_screen.dart';
+import 'package:valorant_app/views/tab_bar_personalizada.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -9,6 +20,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return MaterialApp(
+      home: InitializeApp(),
+    );
+  }
+}
+
+class InitializeApp extends StatelessWidget {
+  final AuthService _authService = AuthService();
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+        stream: _authService.user,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasData && snapshot.data!.email.isNotEmpty) {
+            return const TabBarPersonalizada();
+          }
+
+          return const LoginScreen();
+        });
   }
 }
