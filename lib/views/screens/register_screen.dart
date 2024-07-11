@@ -37,7 +37,7 @@ class RegisterScreen extends StatelessWidget {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TabBarPersonalizada()));
+                              builder: (context) => const TabBarPersonalizada()));
                     } on Exception catch (e) {
                       print(e);
                     }

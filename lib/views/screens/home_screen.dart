@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Image.network(_agents[index].displayIcon!),
+                                  Image.network(_agents[index].fullPortrait!),
                                   Text(_agents[index].displayName!),
                                   Text(_agents[index].description!),
                                 ],
